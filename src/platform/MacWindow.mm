@@ -157,6 +157,10 @@ MacWindow::~MacWindow() {
     if (m_impl->window) [m_impl->window close];
 }
 
+void MacWindow::SetTitle(const char* title) {
+    [m_impl->window setTitle:@(title)];
+}
+
 // 블로킹 없이 이벤트 큐를 비우고 ESC 입력 처리, 델타타임 갱신
 // 렌더 루프 최상단에서 매 프레임 호출
 void MacWindow::PollEvents() {
@@ -174,6 +178,7 @@ void MacWindow::PollEvents() {
                 case  2: return KeyCode::D;
                 case 12: return KeyCode::Q;
                 case 14: return KeyCode::E;
+                case 15: return KeyCode::R;
                 case 49: return KeyCode::Space;
                 case 56: return KeyCode::LeftShift;
                 case 53: return KeyCode::Escape;

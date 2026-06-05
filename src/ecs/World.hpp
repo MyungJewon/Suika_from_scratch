@@ -39,6 +39,11 @@ public:
         fixedSystems.push_back(std::make_unique<T>(std::forward<Args>(args)...));
     }
 
+    void clear_systems() {
+        systems.clear();
+        fixedSystems.clear();
+    }
+
     // 등록된 모든 시스템을 추가된 순서대로 실행
     // 게임 루프에서 매 프레임 호출
     void update(float dt) {

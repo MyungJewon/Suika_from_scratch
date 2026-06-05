@@ -61,6 +61,11 @@ public:
         entity_manager.destroy(entity); // Entity ID를 반납해서 재사용 가능하게
     }
 
+    void Clear() {
+        pools.clear();
+        entity_manager.clear();
+    }
+
     // Entity에 컴포넌트 추가
     // reg.add<Position>(player, {0.f, 0.f}) 처럼 사용
     template<typename T>

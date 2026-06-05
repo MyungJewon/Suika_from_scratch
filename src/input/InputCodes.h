@@ -7,6 +7,7 @@ enum class KeyCode {
     D,
     Q,
     E,
+    R,
     Space,
     LeftShift,
     Escape,

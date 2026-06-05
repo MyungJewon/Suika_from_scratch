@@ -22,6 +22,8 @@ protected:
     void OnRender() override;
 
 private:
+    void Restart();
+
     Entity CreateWall(const Vec3& position, const Vec3& halfExtents);
     Entity CreateBall(const Vec3& position, int levelIndex);
 
@@ -31,6 +33,7 @@ private:
     GameState m_state;
     Entity m_cameraEntity = NULL_ENTITY;
     Entity m_cursorEntity = NULL_ENTITY;
+    Entity m_gameOverOverlay = NULL_ENTITY;
     Mesh m_boxMesh;
     Mesh m_ballMeshes[8];  // 레벨별 메쉬
     float m_cursorX = 0.0f;

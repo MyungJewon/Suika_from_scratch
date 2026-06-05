@@ -111,7 +111,7 @@ void GLRenderer::OpaquePass(Registry& reg, const Camera& camera, const Light& li
     // 기본 프레임버퍼에 Phong 셰이딩 결과를 출력한다.
     glViewport(0, 0, m_width, m_height);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glClearColor(0.18f, 0.22f, 0.32f, 1.0f);  // 어두운 남색 배경
+    glClearColor(m_clearR, m_clearG, m_clearB, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_phongShader.Use();

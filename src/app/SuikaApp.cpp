@@ -17,6 +17,7 @@
 #include "systems/InputSystem.h"
 #include "systems/PhysicsSystem.h"
 #include <algorithm>
+#include <cstdio>
 #include <iostream>
 
 namespace {
@@ -68,7 +69,8 @@ SuikaApp::SuikaApp(int width, int height, const char* title)
 
 void SuikaApp::OnInit() {
     EventBus::Subscribe<GameOverEvent>([this](const GameOverEvent&) {
-        RequestQuit();
+        // 배경을 어두운 빨강으로 전환 — 게임오버 시각 피드백
+        m_renderer.SetClearColor(0.25f, 0.02f, 0.02f);
         std::cout << "Final Score: " << m_state.score << "\n";
     });
 
@@ -131,6 +133,22 @@ void SuikaApp::OnInit() {
 void SuikaApp::OnUpdate(float dt) {
     InputManager& input = InputManager::Get();
 
+    char title[96];
+    if (m_state.gameOver) {
+        std::snprintf(title, sizeof(title), "GAME OVER | Score: %d | Press R to Restart", m_state.score);
+    } else {
+        std::snprintf(title, sizeof(title), "SuikaGame | Score: %d", m_state.score);
+    }
+    GetWindow().SetTitle(title);
+
+    if (m_state.gameOver) {
+        if (input.JustPressed(KeyCode::R)) {
+            Restart();
+        }
+        m_world.update(dt);
+        return;
+    }
+
     float direction = 0.0f;
     if (input.IsKeyDown(KeyCode::Left)) direction -= 1.0f;
     if (input.IsKeyDown(KeyCode::Right)) direction += 1.0f;
@@ -170,6 +188,25 @@ void SuikaApp::OnFixedUpdate() {
 }
 
 void SuikaApp::OnRender() {
+}
+
+void SuikaApp::Restart() {
+    EventBus::Clear();
+    m_scene.GetRegistry().Clear();
+    m_scene.SetActiveCamera(NULL_ENTITY);
+    m_scene.SetActiveLight(NULL_ENTITY);
+    m_world.clear_systems();
+
+    m_state = GameState{};
+    m_cursorX = 0.0f;
+    m_dropCooldown = 0.0f;
+    m_cursorEntity = NULL_ENTITY;
+    m_cameraEntity = NULL_ENTITY;
+    m_gameOverOverlay = NULL_ENTITY;
+    m_nextLevel = 0;
+    m_renderer.SetClearColor(0.18f, 0.22f, 0.32f);  // 배경색 원복
+
+    OnInit();
 }
 
 Entity SuikaApp::CreateWall(const Vec3& position, const Vec3& halfExtents) {

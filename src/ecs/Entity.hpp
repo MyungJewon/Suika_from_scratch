@@ -38,6 +38,11 @@ public:
         free_list.push_back(e);  // 삭제된 ID를 반납 목록에 보관해서 나중에 재사용
     }
 
+    void clear() {
+        next_id = 0;
+        free_list.clear();
+    }
+
 private:
     Entity next_id = 0;              // 다음에 새로 발급할 ID (0부터 시작)
     std::vector<Entity> free_list;   // 반납된 ID 보관 목록 (C#의 List<uint>와 동일)

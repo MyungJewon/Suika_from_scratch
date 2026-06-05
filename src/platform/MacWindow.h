@@ -16,6 +16,7 @@ public:
     int   Height()     const override { return m_height; }
     int   PixelWidth() const override { return m_pixelWidth; }
     int   PixelHeight()const override { return m_pixelHeight; }
+    void  SetTitle(const char* title) override;
 
 private:
     struct Impl;

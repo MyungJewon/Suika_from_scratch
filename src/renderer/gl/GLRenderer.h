@@ -20,6 +20,7 @@ public:
 
     void Render(Scene& scene, IWindow& window);
     void Render(Registry& reg, const Camera& camera, const Light& light, IWindow& window);
+    void SetClearColor(float r, float g, float b) { m_clearR=r; m_clearG=g; m_clearB=b; }
 
 private:
     void InitShadowMap();
@@ -40,6 +41,7 @@ private:
     int m_shadowSize = 1024;
     Mat4 m_lightVP;
     bool   m_initialized  = false;
+    float  m_clearR = 0.18f, m_clearG = 0.22f, m_clearB = 0.32f;
     GLuint m_whiteTex     = 0;   // albedo/normalMap 없을 때 바인딩할 더미 흰색 텍스처
     GLuint m_flatNormalTex= 0;   // normalMap 없을 때 바인딩할 평면 법선 텍스처 (0.5,0.5,1)
 };
